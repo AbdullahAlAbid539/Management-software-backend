@@ -3,9 +3,9 @@ const {Schema} = mongoose;
 
 const teacherSchema = new Schema({
     teachername: String,
-    department : String,
+    teacherdepartment : String,
     teacherid: String,
-    phonenumber: String
+    teacherphonenumber: String
 })
 
 module.exports = mongoose.model("Teacher",teacherSchema)

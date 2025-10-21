@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const User = require('./model/user')
 const Student = require('./model/studentmodel')
 const Teacher = require('./model/teachermodel')
-var cors = require('cors')
+var cors = require('cors');
+
 
 
 // This is email verify message section
@@ -55,6 +56,7 @@ app.post('/account',async (req, res) => {
     }).save()
      res.send('Account Created Succesfully go to login page')
 })
+
 app.post('/login',async (req, res) => {
 
 
@@ -87,15 +89,34 @@ app.post('/studentdetail',async(req,res)=>{
   }).save()
   res.send("Student Data Added successfully")
 })
+
 app.post('/teacherdetail',async(req,res)=>{
   let teacher = new Teacher({
-    teachername:req.body.teachername,
-    department:req.body.department,
-    teacherid:req.body.teacherid,
-    phonenumber:req.body.phonenumber
+    teachername: req.body.teachername,
+    teacherdepartment: req.body.teacherdepartment,
+    teacherid: req.body.teacherid,
+    teacherphonenumber: req.body.teacherphonenumber
   }).save()
   res.send("Teacher Data Added Succesfully")
+})
 
+
+app.get('/teacherlist',async(req,res)=>{
+  let data = await Teacher.find({})
+  res.send(data)
+})
+
+app.get('/studentlist',async(req,res)=>{
+  let data = await Student.find({})
+  res.send(data)
+})
+app.post('/deletestudentdata',async(req,res)=>{
+  let data = await Student.findByIdAndDelete({_id: req.body.id})
+  res.send("Deleted")
+})
+app.post('/deleteteacherdata',async(req,res)=>{
+  let data = await Teacher.findByIdAndDelete({_id: req.body.id})
+  res.send("Deleted")
 })
 
 app.listen(5000)
