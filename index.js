@@ -54,7 +54,10 @@ app.post('/account',async (req, res) => {
         date:req.body.date,
         id:req.body.id
     }).save()
-     res.send('Account Created Succesfully go to login page')
+     res.send({
+      username:isUserexists.username,
+      email:isUserexists.email
+     })
 })
 
 app.post('/login',async (req, res) => {
@@ -105,18 +108,29 @@ app.get('/teacherlist',async(req,res)=>{
   let data = await Teacher.find({})
   res.send(data)
 })
+app.get('/teacher/:id',async(req,res)=>{
+  console.log(req.params.id)
+  let data = await Teacher.find({_id:req.params.id})
+  res.send(data)
+})
+app.post('/deleteteacherdata',async(req,res)=>{
+  let data = await Teacher.findByIdAndDelete({_id: req.body.id})
+  res.send("Deleted")
+})
 
 app.get('/studentlist',async(req,res)=>{
   let data = await Student.find({})
+  res.send(data)
+})
+app.get('/student/:id',async(req,res)=>{
+  console.log(req.params.id)
+  let data = await Student.find({_id:req.params.id})
   res.send(data)
 })
 app.post('/deletestudentdata',async(req,res)=>{
   let data = await Student.findByIdAndDelete({_id: req.body.id})
   res.send("Deleted")
 })
-app.post('/deleteteacherdata',async(req,res)=>{
-  let data = await Teacher.findByIdAndDelete({_id: req.body.id})
-  res.send("Deleted")
-})
+
 
 app.listen(5000)
