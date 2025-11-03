@@ -113,8 +113,18 @@ app.get('/teacher/:id',async(req,res)=>{
   let data = await Teacher.find({_id:req.params.id})
   res.send(data)
 })
+app.patch('/teacher/:id',async(req,res)=>{
+
+  let data = await Teacher.findByIdAndUpdate({_id:req.params.id},{
+    teachername:req.body.teachername,
+    teacherdepartment:req.body.teacherdepartment,
+    teacherid:req.body.teacherid,
+    teacherphonenumber:req.body.teacherphonenumber
+  })
+  res.send(data)
+})
 app.post('/deleteteacherdata',async(req,res)=>{
-  let data = await Teacher.findByIdAndDelete({_id: req.body.id})
+  let data = await Teacher.findByIdAndDelete({_id: req.body.id},{})
   res.send("Deleted")
 })
 
@@ -125,6 +135,11 @@ app.get('/studentlist',async(req,res)=>{
 app.get('/student/:id',async(req,res)=>{
   console.log(req.params.id)
   let data = await Student.find({_id:req.params.id})
+  res.send(data)
+})
+app.patch('/student/:id',async(req,res)=>{
+  console.log(req.params.id)
+  let data = await Student.findByIdAndUpdate({_id:req.params.id})
   res.send(data)
 })
 app.post('/deletestudentdata',async(req,res)=>{
